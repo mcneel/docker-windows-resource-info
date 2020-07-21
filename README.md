@@ -8,7 +8,7 @@ A sample c++ project that uses Windows' Job Object API to determine the proporti
 ...
 Successfully tagged buildtools2019:latest
 
-> docker run -v D:\dev\tmp\BuildTools\src:C:\src --cpus=5.34 --isolation=process buildtools2019
+> docker run --rm --cpus=5.34 --isolation=process buildtools2019
 
 Hello World!
 

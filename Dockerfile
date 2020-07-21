@@ -1,5 +1,7 @@
 # escape=`
 
+# https://docs.microsoft.com/en-us/visualstudio/install/build-tools-container?view=vs-2019
+
 # Use the latest Windows Server Core image with .NET Framework 4.8.
 FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-1903
 
@@ -24,4 +26,12 @@ RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
 # This entry point starts the developer command prompt and launches the PowerShell shell.
 # ENTRYPOINT ["C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat", "&&", "powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
 
-CMD ["C:\\src\\x64\\Debug\\cpu_jobj.exe"]
+# modifications for cpu_jobj sample below...
+
+SHELL ["C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat", "&&", "powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
+
+ADD src .\src
+
+RUN msbuild -t:rebuild .\src\
+
+CMD ["src\\x64\\Debug\\cpu_jobj.exe"]
